@@ -1,0 +1,14 @@
+Criar banco de dados
+Criar classes do modelo do sistema
+Criar arquivos de configurações
+Fazer cadastro de unidade
+Fazer cadastro de quadra
+Fazer cadastro de horário
+Fazer cadastro de cliente
+Fazer cadastro de reserva
+Fazer página de agenda de reservas
+Fazer a página de 'meus dados' para edição do perfil
+Criar template
+Fazer site (joomla)
+Fazer login com redes sociais (Facebook, google, twitter, etc)
+Fazer gerenciamento de reservas usando dados do login do joomla
