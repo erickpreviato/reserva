@@ -1,1 +1,22 @@
+Area restrita (uso comum)
+-Alterar dados do perfil
+--Dados pessoais, foto, endereço, etc.
 
+Area restrita (administrador)
+-Gerenciar quadras disponíveis
+--Descrição da quadra, horários, etc.
+-Gerenciar reservas das quadras
+--Visualizar agenda de cada quadra
+--Mensalistas, diaristas, efetuar/editar/cancelar reserva
+
+Area restrita (cliente)
+-Visualizar agenda de cada quadra
+-Efetuar/editar/cancelar reserva
+
+Site
+-Itens de menu
+--Home
+--Sobre
+--Locação de campos
+--Outros serviços
+--Contato
