@@ -26,25 +26,17 @@
  * 
  */
 
-/**
- * Table Definition for cliente
- */
+include_once '../conf/config.default.php';
 
-require_once 'DB/DataObject.php';
+include_once MODEL_DIR . '/Unidade.php';
 
-class Cliente extends DB_DataObject 
-{
-    ###START_AUTOCODE
-    /* the code below is auto generated do not remove the above tag */
+include_once CONTROLLER_DIR . '/unidade.php';
 
-    public $__table = 'cliente';             // table name
-    public $id;                              // int(4)  primary_key not_null
-    public $nome;                            // varchar(200)   not_null
-    public $email;                           // varchar(200)  
-    public $telefone;                        // varchar(45)  
-    public $observacoes;                     // text  
-    public $status;                          // varchar(1)   not_null default_1
+include_once INCLUDE_DIR . '/header.php';
 
-    /* the code above is auto generated do not remove the tag below */
-    ###END_AUTOCODE
-}
+$unidade = new Unidade();
+$unidade->setstatus(1);
+$unidade->find();
+echo $unidade->showAll();
+
+include_once INCLUDE_DIR . '/footer.php';

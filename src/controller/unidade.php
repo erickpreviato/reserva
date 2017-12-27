@@ -26,25 +26,47 @@
  * 
  */
 
-/**
- * Table Definition for cliente
- */
+if (isset($_POST['showForm'])) {
+    $unidade = new Unidade();
+    if ($_POST['showForm'] > 0) {
+        $unidade->get($_POST['showForm']);
+    }
+    echo $unidade->showForm();
+    die();
+}
+if (isset($_POST['showFormDel'])) {
+    $unidade = new Unidade();
+    $unidade->get($_POST['showFormDel']);
+    echo $unidade->showFormDel();
+    die();
+}
 
-require_once 'DB/DataObject.php';
+if (isset($_POST['salvar'])) {
+    //Salvar ou editar uma unidade
+    $unidade = new Unidade();
+    if ($_POST['id'] > 0) {
+        $unidade->get($_POST['id']);
+    }
+    $unidade->setnome($_POST['nome']);
+    if ($_POST['id'] > 0) {
+        $unidade->update();
+    } else {
+        $unidade->insert();
+    }
+    $_SESSION['msg'] = '<b>Feito!</b> Unidade salva com sucesso.';
+    $_SESSION['tipo-msg'] = 'success';
+    header('Location: '.URL.'/unidade');
+    die();
+}
 
-class Cliente extends DB_DataObject 
-{
-    ###START_AUTOCODE
-    /* the code below is auto generated do not remove the above tag */
-
-    public $__table = 'cliente';             // table name
-    public $id;                              // int(4)  primary_key not_null
-    public $nome;                            // varchar(200)   not_null
-    public $email;                           // varchar(200)  
-    public $telefone;                        // varchar(45)  
-    public $observacoes;                     // text  
-    public $status;                          // varchar(1)   not_null default_1
-
-    /* the code above is auto generated do not remove the tag below */
-    ###END_AUTOCODE
+if (isset($_POST['remover'])) {
+    //Salvar ou editar uma unidade
+    $unidade = new Unidade();
+    $unidade->get($_POST['id']);
+    $unidade->delete();
+    
+    $_SESSION['msg'] = '<b>Feito!</b> Unidade removida com sucesso.';
+    $_SESSION['tipo-msg'] = 'success';
+    header('Location: '.URL.'/unidade');
+    die();
 }
