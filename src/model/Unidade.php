@@ -39,8 +39,54 @@ class Unidade extends DB_DataObject
 
     public $__table = 'unidade';             // table name
     public $id;                              // int(4)  primary_key not_null
-    public $nome;                            // varchar(200)  
+    public $nome;                            // varchar(200)   not_null
+    public $status;                          // varchar(1)   not_null default_1
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    
+    public function showAll() {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/unidade");
+        $tpl->loadTemplateFile('lista.tpl.html');
+        $tpl->setVariable('HOME', URL);
+        $tpl->setVariable('PHP_SELF', $_SERVER['REQUEST_URI']);
+        $tpl->setVariable('IMAGE_URL', IMAGE_URL);
+        
+        if ($this->count() == 0) {
+            $tpl->touchBlock('table_none');
+        }
+        
+        while ($this->fetch()) {
+            $tpl->setVariable('Nome', $this->nome);
+            $tpl->setVariable('ID', $this->id);
+            $tpl->parse('table_row');
+        }
+        
+        return $tpl->get();
+    }
+    
+    public function showForm() {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/unidade");
+        $tpl->loadTemplateFile('form.tpl.html');
+        
+        $tpl->setVariable('ID', (empty($this->id)) ? 0 : $this->id);
+        $tpl->setVariable('Nome', $this->nome);
+        
+        return $tpl->get();
+    }
+    
+    public function showFormDel() {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/unidade");
+        $tpl->loadTemplateFile('formDel.tpl.html');
+        
+        $tpl->setVariable('ID', $this->id);
+        $tpl->setVariable('Nome', $this->nome);
+        
+        return $tpl->get();
+    }
+    
+    public function delete() {
+        $this->status = 0;
+        return $this->update();
+    }
 }

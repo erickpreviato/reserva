@@ -1,5 +1,4 @@
-<?php
-
+<!--
 /**
  * 
  * Copyright © 2017 Erick Vansim Previato <erick.previato@gmail.com>
@@ -25,26 +24,19 @@
  * SOFTWARE.
  * 
  */
-
-/**
- * Table Definition for cliente
- */
-
-require_once 'DB/DataObject.php';
-
-class Cliente extends DB_DataObject 
-{
-    ###START_AUTOCODE
-    /* the code below is auto generated do not remove the above tag */
-
-    public $__table = 'cliente';             // table name
-    public $id;                              // int(4)  primary_key not_null
-    public $nome;                            // varchar(200)   not_null
-    public $email;                           // varchar(200)  
-    public $telefone;                        // varchar(45)  
-    public $observacoes;                     // text  
-    public $status;                          // varchar(1)   not_null default_1
-
-    /* the code above is auto generated do not remove the tag below */
-    ###END_AUTOCODE
-}
+-->
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title" id="addModalLabel">Cadastro de unidade</h4>
+</div>
+<div class="modal-body">
+    <input type="hidden" name="id" value="{ID}" />
+    <div class="form-group">
+        <label for="nome">Nome da unidade</label>
+        <input type="text" class="form-control" id="nome" name="nome" value="{Nome}" required="required" placeholder="Digite o nome da unidade">
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+    <input type="submit" class="btn btn-primary" name="salvar" id="salvar" value="Salvar" />
+</div>
