@@ -7,13 +7,6 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-xs-12">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li role="presentation"><a href="<?php echo URL?>/sobre">Sobre nós</a></li>
-                                    <li role="presentation"><a href="<?php echo URL?>/categorias">Lista de categorias</a></li>
-                                    <li role="presentation"><a href="<?php echo URL?>/anuncie">Anuncie aqui</a></li>
-                                    <li role="presentation"><a href="<?php echo URL?>/meus-anuncios">Meus anúncios</a></li>
-                                    <li role="presentation"><a href="<?php echo URL?>/fale-conosco">Fale conosco</a></li>
-                                </ul>
                             </div>
                         </div>
                     </div>

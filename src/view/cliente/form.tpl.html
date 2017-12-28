@@ -1,0 +1,54 @@
+<!--
+/**
+ * 
+ * Copyright © 2017 Erick Vansim Previato <erick.previato@gmail.com>
+ * 
+ * Este arquivo é parte do programa "Reserva de Quadra"
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * 
+ */
+-->
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title" id="addModalLabel">Cadastro de cliente</h4>
+</div>
+<div class="modal-body">
+    <input type="hidden" name="id" value="{ID}" />
+    <div class="form-group">
+        <label for="nome">Nome do cliente</label>
+        <input type="text" class="form-control" id="nome" name="nome" value="{Nome}" required="required" placeholder="Digite o nome do cliente">
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" value="{Email}" placeholder="Digite o email do cliente">
+    </div>
+    <div class="form-group">
+        <label for="telefone">Telefone</label>
+        <input type="text" class="form-control" id="telefone" name="telefone" value="{Telefone}" placeholder="Digite o telefone do cliente">
+    </div>
+    <div class="form-group">
+        <label for="observacoes">Observações</label>
+        <textarea class="form-control" id="observacoes" name="observacoes" rows="3">{Observacoes}</textarea>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+    <input type="submit" class="btn btn-primary" name="salvar" id="salvar" value="Salvar" />
+</div>

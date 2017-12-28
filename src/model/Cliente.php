@@ -47,4 +47,55 @@ class Cliente extends DB_DataObject
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    
+    public function showAll() {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/cliente");
+        $tpl->loadTemplateFile('lista.tpl.html');
+        $tpl->setVariable('HOME', URL);
+        $tpl->setVariable('PHP_SELF', $_SERVER['REQUEST_URI']);
+        $tpl->setVariable('IMAGE_URL', IMAGE_URL);
+        
+        if ($this->count() == 0) {
+            $tpl->touchBlock('table_none');
+        }
+        
+        while ($this->fetch()) {
+            $tpl->setVariable('Nome', utf8_encode($this->nome));
+            $tpl->setVariable('ID', $this->id);
+            $email = (empty($this->email)) ? '' : ' <'.$this->email.'>';
+            $telefone = (empty($this->telefone)) ? '' : ' '.$this->telefone;
+            $tpl->setVariable('Contato', 'Contato: '.$telefone.$email);
+            $tpl->parse('table_row');
+        }
+        
+        return $tpl->get();
+    }
+    
+    public function showForm() {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/cliente");
+        $tpl->loadTemplateFile('form.tpl.html');
+        
+        $tpl->setVariable('ID', (empty($this->id)) ? 0 : $this->id);
+        $tpl->setVariable('Nome', utf8_encode($this->nome));
+        $tpl->setVariable('Email', $this->email);
+        $tpl->setVariable('Telefone', $this->telefone);
+        $tpl->setVariable('Observacoes', utf8_encode($this->observacoes));
+        
+        return $tpl->get();
+    }
+    
+    public function showFormDel() {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/cliente");
+        $tpl->loadTemplateFile('formDel.tpl.html');
+        
+        $tpl->setVariable('ID', $this->id);
+        $tpl->setVariable('Nome', utf8_encode($this->nome));
+        
+        return $tpl->get();
+    }
+    
+    public function delete() {
+        $this->status = 0;
+        return $this->update();
+    }
 }

@@ -108,9 +108,25 @@
             </div>
         </section>
 
+        <section class="barra-menu2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <ul class="nav nav-justified">
+                            <li role="presentation"><h4><i class="fa fa-lock"></i> Menu restrito</h4></li>
+                            <li role="presentation"><a href="<?php echo URL ?>/unidade">Unidades</a></li>
+                            <li role="presentation"><a href="<?php echo URL ?>/quadra">Quadras</a></li>
+                            <li role="presentation"><a href="<?php echo URL ?>/horario">Horários</a></li>
+                            <li role="presentation"><a href="<?php echo URL ?>/cliente">Clientes</a></li>
+                            <li role="presentation"><a href="<?php echo URL ?>/reserva">Reservas</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section>
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12">
-<?php echo show_message(); ?>
+                    <?php echo show_message(); ?>
