@@ -1,5 +1,4 @@
-<?php
-
+<!--
 /**
  * 
  * Copyright © 2017 Erick Vansim Previato <erick.previato@gmail.com>
@@ -25,48 +24,27 @@
  * SOFTWARE.
  * 
  */
-
-if (isset($_POST['showForm'])) {
-    $unidade = new Unidade();
-    if ($_POST['showForm'] > 0) {
-        $unidade->get($_POST['showForm']);
-    }
-    echo $unidade->showForm();
-    die();
-}
-if (isset($_POST['showFormDel'])) {
-    $unidade = new Unidade();
-    $unidade->get($_POST['showFormDel']);
-    echo $unidade->showFormDel();
-    die();
-}
-
-if (isset($_POST['salvar'])) {
-    //Salvar ou editar uma unidade
-    $unidade = new Unidade();
-    if ($_POST['id'] > 0) {
-        $unidade->get($_POST['id']);
-    }
-    $unidade->setnome(utf8_decode($_POST['nome']));
-    if ($_POST['id'] > 0) {
-        $unidade->update();
-    } else {
-        $unidade->insert();
-    }
-    $_SESSION['msg'] = '<b>Feito!</b> Unidade salva com sucesso.';
-    $_SESSION['tipo-msg'] = 'success';
-    header('Location: '.URL.'/unidade');
-    die();
-}
-
-if (isset($_POST['remover'])) {
-    //Salvar ou editar uma unidade
-    $unidade = new Unidade();
-    $unidade->get($_POST['id']);
-    $unidade->delete();
-    
-    $_SESSION['msg'] = '<b>Feito!</b> Unidade removida com sucesso.';
-    $_SESSION['tipo-msg'] = 'success';
-    header('Location: '.URL.'/unidade');
-    die();
-}
+-->
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title" id="addModalLabel">Cadastro de quadra</h4>
+</div>
+<div class="modal-body">
+    <input type="hidden" name="id" value="{ID}" />
+    <div class="form-group">
+        <label>Unidade</label>
+        {Unidade}
+    </div>
+    <div class="form-group">
+        <label for="nome">Nome da quadra</label>
+        <input type="text" class="form-control" id="nome" name="nome" value="{Nome}" required="required" placeholder="Digite o nome da quadra">
+    </div>
+    <div class="form-group">
+        <label for="descricao">Descrição da quadra</label>
+        <textarea class="form-control" id="descricao" name="descricao" placeholder="Digite uma descrição da quadra" rows="3">{Descricao}</textarea>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+    <input type="submit" class="btn btn-primary" name="salvar" id="salvar" value="Salvar" />
+</div>

@@ -27,46 +27,48 @@
  */
 
 if (isset($_POST['showForm'])) {
-    $unidade = new Unidade();
+    $quadra = new Quadra();
     if ($_POST['showForm'] > 0) {
-        $unidade->get($_POST['showForm']);
+        $quadra->get($_POST['showForm']);
     }
-    echo $unidade->showForm();
+    echo $quadra->showForm();
     die();
 }
 if (isset($_POST['showFormDel'])) {
-    $unidade = new Unidade();
-    $unidade->get($_POST['showFormDel']);
-    echo $unidade->showFormDel();
+    $quadra = new Quadra();
+    $quadra->get($_POST['showFormDel']);
+    echo $quadra->showFormDel();
     die();
 }
 
 if (isset($_POST['salvar'])) {
     //Salvar ou editar uma unidade
-    $unidade = new Unidade();
+    $quadra = new Quadra();
     if ($_POST['id'] > 0) {
-        $unidade->get($_POST['id']);
+        $quadra->get($_POST['id']);
     }
-    $unidade->setnome(utf8_decode($_POST['nome']));
+    $quadra->setnome(utf8_decode($_POST['nome']));
+    $quadra->setdescricao(utf8_decode($_POST['descricao']));
+    $quadra->setunidade_id($_POST['unidade_id']);
     if ($_POST['id'] > 0) {
-        $unidade->update();
+        $quadra->update();
     } else {
-        $unidade->insert();
+        $quadra->insert();
     }
-    $_SESSION['msg'] = '<b>Feito!</b> Unidade salva com sucesso.';
+    $_SESSION['msg'] = '<b>Feito!</b> Quadra salva com sucesso.';
     $_SESSION['tipo-msg'] = 'success';
-    header('Location: '.URL.'/unidade');
+    header('Location: '.URL.'/quadra');
     die();
 }
 
 if (isset($_POST['remover'])) {
     //Salvar ou editar uma unidade
-    $unidade = new Unidade();
-    $unidade->get($_POST['id']);
-    $unidade->delete();
+    $quadra = new Quadra();
+    $quadra->get($_POST['id']);
+    $quadra->delete();
     
-    $_SESSION['msg'] = '<b>Feito!</b> Unidade removida com sucesso.';
+    $_SESSION['msg'] = '<b>Feito!</b> Quadra removida com sucesso.';
     $_SESSION['tipo-msg'] = 'success';
-    header('Location: '.URL.'/unidade');
+    header('Location: '.URL.'/quadra');
     die();
 }

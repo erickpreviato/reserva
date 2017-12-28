@@ -26,47 +26,17 @@
  * 
  */
 
-if (isset($_POST['showForm'])) {
-    $unidade = new Unidade();
-    if ($_POST['showForm'] > 0) {
-        $unidade->get($_POST['showForm']);
-    }
-    echo $unidade->showForm();
-    die();
-}
-if (isset($_POST['showFormDel'])) {
-    $unidade = new Unidade();
-    $unidade->get($_POST['showFormDel']);
-    echo $unidade->showFormDel();
-    die();
-}
+include_once '../conf/config.default.php';
 
-if (isset($_POST['salvar'])) {
-    //Salvar ou editar uma unidade
-    $unidade = new Unidade();
-    if ($_POST['id'] > 0) {
-        $unidade->get($_POST['id']);
-    }
-    $unidade->setnome(utf8_decode($_POST['nome']));
-    if ($_POST['id'] > 0) {
-        $unidade->update();
-    } else {
-        $unidade->insert();
-    }
-    $_SESSION['msg'] = '<b>Feito!</b> Unidade salva com sucesso.';
-    $_SESSION['tipo-msg'] = 'success';
-    header('Location: '.URL.'/unidade');
-    die();
-}
+include_once MODEL_DIR . '/Unidade.php';
+include_once MODEL_DIR . '/Quadra.php';
 
-if (isset($_POST['remover'])) {
-    //Salvar ou editar uma unidade
-    $unidade = new Unidade();
-    $unidade->get($_POST['id']);
-    $unidade->delete();
-    
-    $_SESSION['msg'] = '<b>Feito!</b> Unidade removida com sucesso.';
-    $_SESSION['tipo-msg'] = 'success';
-    header('Location: '.URL.'/unidade');
-    die();
-}
+include_once CONTROLLER_DIR . '/quadra.php';
+
+include_once INCLUDE_DIR . '/header.php';
+
+$quadra = new Quadra();
+$quadra->find();
+echo $quadra->showAll();
+
+include_once INCLUDE_DIR . '/footer.php';

@@ -45,6 +45,12 @@ class Unidade extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
+    public static function showUnidade($id) {
+        $unidade = new Unidade();
+        $unidade->get($id);
+        return utf8_encode($unidade->nome);
+    }
+
     public function showAll() {
         $tpl = new HTML_Template_Sigma(VIEW_DIR . "/unidade");
         $tpl->loadTemplateFile('lista.tpl.html');
@@ -57,7 +63,7 @@ class Unidade extends DB_DataObject
         }
         
         while ($this->fetch()) {
-            $tpl->setVariable('Nome', $this->nome);
+            $tpl->setVariable('Nome', utf8_encode($this->nome));
             $tpl->setVariable('ID', $this->id);
             $tpl->parse('table_row');
         }
@@ -70,7 +76,7 @@ class Unidade extends DB_DataObject
         $tpl->loadTemplateFile('form.tpl.html');
         
         $tpl->setVariable('ID', (empty($this->id)) ? 0 : $this->id);
-        $tpl->setVariable('Nome', $this->nome);
+        $tpl->setVariable('Nome', utf8_encode($this->nome));
         
         return $tpl->get();
     }
@@ -81,6 +87,23 @@ class Unidade extends DB_DataObject
         
         $tpl->setVariable('ID', $this->id);
         $tpl->setVariable('Nome', $this->nome);
+        
+        return $tpl->get();
+    }
+    
+    public static function showSelect($id = null) {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/unidade");
+        $tpl->loadTemplateFile('select.tpl.html');
+        
+        $unidade = new Unidade();
+        $unidade->status = 1;
+        $unidade->find();
+        while ($unidade->fetch()) {
+            $tpl->setVariable('Nome', utf8_encode($unidade->nome));
+            $tpl->setVariable('ID', $unidade->id);
+            $tpl->setVariable('Selected', ($unidade->id == $id) ? ' selected="selected"' : '');
+            $tpl->parse('table_row');
+        }
         
         return $tpl->get();
     }

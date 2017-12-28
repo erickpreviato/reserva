@@ -1,5 +1,4 @@
-<?php
-
+<!--
 /**
  * 
  * Copyright © 2017 Erick Vansim Previato <erick.previato@gmail.com>
@@ -25,48 +24,10 @@
  * SOFTWARE.
  * 
  */
-
-if (isset($_POST['showForm'])) {
-    $unidade = new Unidade();
-    if ($_POST['showForm'] > 0) {
-        $unidade->get($_POST['showForm']);
-    }
-    echo $unidade->showForm();
-    die();
-}
-if (isset($_POST['showFormDel'])) {
-    $unidade = new Unidade();
-    $unidade->get($_POST['showFormDel']);
-    echo $unidade->showFormDel();
-    die();
-}
-
-if (isset($_POST['salvar'])) {
-    //Salvar ou editar uma unidade
-    $unidade = new Unidade();
-    if ($_POST['id'] > 0) {
-        $unidade->get($_POST['id']);
-    }
-    $unidade->setnome(utf8_decode($_POST['nome']));
-    if ($_POST['id'] > 0) {
-        $unidade->update();
-    } else {
-        $unidade->insert();
-    }
-    $_SESSION['msg'] = '<b>Feito!</b> Unidade salva com sucesso.';
-    $_SESSION['tipo-msg'] = 'success';
-    header('Location: '.URL.'/unidade');
-    die();
-}
-
-if (isset($_POST['remover'])) {
-    //Salvar ou editar uma unidade
-    $unidade = new Unidade();
-    $unidade->get($_POST['id']);
-    $unidade->delete();
-    
-    $_SESSION['msg'] = '<b>Feito!</b> Unidade removida com sucesso.';
-    $_SESSION['tipo-msg'] = 'success';
-    header('Location: '.URL.'/unidade');
-    die();
-}
+-->
+<select name="unidade_id" class="form-control" required="required">
+    <option value="">Selecione a unidade...</option>
+    <!-- BEGIN table_row -->
+    <option{Selected} value="{ID}">{Nome}</option>
+    <!-- END table_row -->
+</select>
