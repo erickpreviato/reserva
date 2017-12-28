@@ -26,43 +26,18 @@
  * 
  */
 
-/**
- * Table Definition for tipo
- */
+include_once '../conf/config.default.php';
 
-require_once 'DB/DataObject.php';
+include_once MODEL_DIR . '/Tipo.php';
+include_once MODEL_DIR . '/Horario.php';
 
-class Tipo extends DB_DataObject 
-{
-    ###START_AUTOCODE
-    /* the code below is auto generated do not remove the above tag */
+include_once CONTROLLER_DIR . '/tipo.php';
+include_once CONTROLLER_DIR . '/horario.php';
 
-    public $__table = 'tipo';                // table name
-    public $id;                              // int(4)  primary_key not_null
-    public $descricao;                       // varchar(200)   not_null
+include_once INCLUDE_DIR . '/header.php';
 
-    /* the code above is auto generated do not remove the tag below */
-    ###END_AUTOCODE
-    
-    public static function showTipo($id) {
-        $tipo = new Tipo();
-        $tipo->get($id);
-        return utf8_encode($tipo->descricao);
-    }
-    
-    public static function showSelect($id = null) {
-        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/tipo");
-        $tpl->loadTemplateFile('select.tpl.html');
-        
-        $tipo = new Tipo();
-        $tipo->find();
-        while ($tipo->fetch()) {
-            $tpl->setVariable('Descricao', utf8_encode($tipo->descricao));
-            $tpl->setVariable('ID', $tipo->id);
-            $tpl->setVariable('Selected', ($tipo->id == $id) ? ' selected="selected"' : '');
-            $tpl->parse('table_row');
-        }
-        
-        return $tpl->get();
-    }
-}
+$horario = new Horario();
+$horario->find();
+echo $horario->showAll();
+
+include_once INCLUDE_DIR . '/footer.php';
