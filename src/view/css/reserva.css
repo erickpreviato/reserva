@@ -9,7 +9,7 @@
 
 .barra-menu {
     background: #333;
-    padding: 15px;
+    padding: 10px;
     color: white;
 }
 
@@ -25,6 +25,27 @@
 }
 
 .barra-menu .container {
+    text-align: center;
+}
+
+.barra-menu2 {
+    background: #da251d;
+    padding: 0px;
+    color: white;
+}
+
+.barra-menu2 a {
+    color: #ccc;
+    font-size: 16px;
+    background-color: #da251d;
+}
+.barra-menu2 a:hover {
+    color: #eee;
+    text-decoration: none;
+    background-color: #da251d !important;
+}
+
+.barra-menu2 .container {
     text-align: center;
 }
 
@@ -148,6 +169,12 @@ footer a:hover {
 @media (min-width: 992px) {
     .form-group-2 {
         margin-top: 0px;
+    }
+}
+
+@media (min-width: 1700px) {
+    .container {
+        width: 1600px;
     }
 }
 
