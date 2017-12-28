@@ -46,4 +46,54 @@ class Horario extends DB_DataObject
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    
+    public function showAll() {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/horario");
+        $tpl->loadTemplateFile('lista.tpl.html');
+        $tpl->setVariable('HOME', URL);
+        $tpl->setVariable('PHP_SELF', $_SERVER['REQUEST_URI']);
+        $tpl->setVariable('IMAGE_URL', IMAGE_URL);
+        
+        if ($this->count() == 0) {
+            $tpl->touchBlock('table_none');
+        }
+        
+        while ($this->fetch()) {
+            $tpl->setVariable('ID', $this->id);
+            $tpl->setVariable('Tipo', Tipo::showTipo($this->tipo_id));
+            
+            $hora = $this->inicio_hora.':'.str_pad($this->inicio_minuto, 2, '0');
+            $horaFim = date("H:i", strtotime($hora.' + '.$this->duracao.' minutes'));
+            $tpl->setVariable('Horario', 'Das '.$hora.' às '.$horaFim);
+            $tpl->parse('table_row');
+        }
+        
+        return $tpl->get();
+    }
+    
+    public function showForm() {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/horario");
+        $tpl->loadTemplateFile('form.tpl.html');
+        
+        $tpl->setVariable('PHP_SELF', $_SERVER['REQUEST_URI']);
+        $tpl->setVariable('ID', (empty($this->id)) ? 0 : $this->id);
+        $tpl->setVariable('Tipo', Tipo::showSelect($this->tipo_id));
+        $tpl->setVariable('Hora', $this->inicio_hora);
+        $tpl->setVariable('Minuto', str_pad($this->inicio_minuto, 2, '0'));
+        $tpl->setVariable('Duracao', (empty($this->duracao)) ? TEMPO_QUADRA : $this->duracao);
+        
+        return $tpl->get();
+    }
+    
+    public function showFormDel() {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/horario");
+        $tpl->loadTemplateFile('formDel.tpl.html');
+        
+        $tpl->setVariable('ID', $this->id);
+        $hora = $this->inicio_hora.':'.$this->inicio_minuto;
+        $horaFim = date("H:i", strtotime($hora.' + '.$this->duracao.' minutes'));
+        $tpl->setVariable('Horario', Tipo::showTipo($this->tipo_id).' (das '.$hora.' às '.$horaFim.')');
+        
+        return $tpl->get();
+    }
 }
