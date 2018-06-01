@@ -105,3 +105,9 @@ h6.card-title {
 .card-text {
     font-size: 13px;
 }
+
+@media (max-width: 480px) {
+    .banners {
+        padding-top: 100px;
+    }
+}
