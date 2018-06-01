@@ -1,4 +1,5 @@
-<!--
+<?php
+
 /**
  * 
  * Copyright © 2017 Erick Vansim Previato <erick.previato@gmail.com>
@@ -24,10 +25,23 @@
  * SOFTWARE.
  * 
  */
--->
-<select name="cliente_id" id="cliente_id" class="form-control" required="required">
-    <option value="">Selecione o cliente...</option>
-    <!-- BEGIN table_row -->
-    <option{Selected} value="{ID}">{Nome}</option>
-    <!-- END table_row -->
-</select>
+
+include_once '../conf/config.default.php';
+
+include_once MODEL_DIR . '/Cliente.php';
+include_once MODEL_DIR . '/Tipo.php';
+include_once MODEL_DIR . '/Horario.php';
+include_once MODEL_DIR . '/Unidade.php';
+include_once MODEL_DIR . '/Quadra.php';
+include_once MODEL_DIR . '/Reserva.php';
+
+include_once CONTROLLER_DIR . '/reserva.php';
+
+include_once INCLUDE_DIR . '/header.php';
+
+$reserva = new Reserva();
+$reserva->setstatus('1');
+$reserva->find();
+echo $reserva->showAll();
+
+include_once INCLUDE_DIR . '/footer.php';

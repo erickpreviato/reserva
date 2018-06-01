@@ -44,7 +44,131 @@ class Reserva extends DB_DataObject
     public $cliente_id;                      // int(4)   not_null
     public $mensal;                          // varchar(1)  
     public $data;                            // datetime  
+    public $data_fim;                        // datetime  
+    public $status;                          // varchar(1)   not_null default_1
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    
+    public function showAll() {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/reserva");
+        $tpl->loadTemplateFile('lista.tpl.html');
+        $tpl->setVariable('HOME', URL);
+        $tpl->setVariable('PHP_SELF', $_SERVER['REQUEST_URI']);
+        $tpl->setVariable('IMAGE_URL', IMAGE_URL);
+        
+        if ($this->count() == 0) {
+            $tpl->touchBlock('table_none');
+        }
+        
+        $i = 0;
+        while ($this->fetch()) {
+            $tpl->setVariable('ID', $this->id);
+            $tpl->setVariable('Cliente', Cliente::showCliente($this->cliente_id));
+            $tpl->setVariable('Quadra', Quadra::showQuadra($this->quadra_id));
+            $tpl->setVariable('Horario', Horario::showHorario($this->horario_id));
+            
+            $data = new DateTime($this->data);
+            $mensalFim = ($this->data_fim) ? ' <small>[até '.date2show($this->data_fim).']</small>' : '';
+            $mensal = ($this->mensal == 'S') ? 'Mensalista ('.diaSemana($data->format('w')).')'.$mensalFim : date2show($this->data);
+            
+            $event = new HTML_Template_Sigma(VIEW_DIR . "/reserva");
+            $event->loadTemplateFile('event.tpl.html');
+            $event->setVariable('Titulo', Quadra::showQuadra($this->quadra_id));
+            
+            $horario = new Horario();
+            $horario->get($this->horario_id);
+            $hora = $horario->inicio_hora.':'.$horario->inicio_minuto;
+            $horaFim = date("H:i", strtotime($hora.' + '.$horario->duracao.' minutes'));
+            
+            $event->setVariable('URL', 'javascript:;');
+            $virgula = ($i > 0) ? ',' : '';
+            
+            if ($this->mensal == 'S') {
+                $event->touchBlock('mensal');
+                $tpl->touchBlock('mensal');
+                if (!$this->data_fim) {
+                    $tpl->touchBlock('cancelar');
+                }
+                $inicio = $hora;
+                $fim = $horaFim;
+                $event->setVariable('InicioData', $data->format('Y-m-d'));
+                $event->setVariable('FimData', $data->format('Y-m-d'));
+                $event->setVariable('Dia', $data->format('w'));
+                $event->setVariable('Cor', '#f56954');
+                if (empty($this->data_fim) || !$this->data_fim) {
+                    $event->setVariable('End', "moment('".$data->format('Y-m-d')."','YYYY-MM-DD').endOf('year')");
+                } else {
+                    $dataFim = new DateTime($this->data_fim);
+                    $event->setVariable('End', "moment('".$dataFim->format('Y-m-d')."','YYYY-MM-DD')");
+                }
+            } else {
+                $event->hideBlock('mensal');
+                $tpl->hideBlock('mensal');
+                $inicio = $data->format('Y-m-d').'T'.$hora.':00';
+                $fim = $data->format('Y-m-d').'T'.$horaFim.':00';
+                $event->setVariable('Cor', '#3c8dbc');
+            }
+            $event->setVariable('Inicio', $inicio);
+            $event->setVariable('Fim', $fim);
+            
+            $tpl->setVariable('Data', $mensal);
+            $tpl->parse('table_row');
+            $tpl->setVariable('Eventos', $virgula.$event->get());
+            $tpl->parse('events');
+            $i++;
+        }
+        
+        return $tpl->get();
+    }
+    
+    public function showForm() {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/reserva");
+        $tpl->loadTemplateFile('form.tpl.html');
+        
+        $tpl->setVariable('ID', (empty($this->id)) ? 0 : $this->id);
+        $tpl->setVariable('Clientes', Cliente::showSelect($this->cliente_id));
+        $tpl->setVariable('Quadras', Quadra::showSelect($this->quadra_id));
+        $tpl->setVariable('Horarios', Horario::showSelect($this->horario_id));
+        $tpl->setVariable('Data', date2show($this->data));
+        $tpl->setVariable('Mensal', ($this->mensal == 'S') ? ' checked="checked"' : '');
+        
+        return $tpl->get();
+    }
+    
+    public function showFormDel() {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/reserva");
+        $tpl->loadTemplateFile('formDel.tpl.html');
+        
+        $tpl->setVariable('ID', $this->id);
+        $tpl->setVariable('Cliente', Cliente::showCliente($this->cliente_id));
+        $tpl->setVariable('Quadra', Quadra::showQuadra($this->quadra_id));
+        $tpl->setVariable('Horario', Horario::showHorario($this->horario_id));
+        $data = new DateTime($this->data);
+        $mensal = ($this->mensal == 'S') ? 'Mensalista ('.diaSemana($data->format('w')).')' : date2show($this->data);
+        $tpl->setVariable('Data', $mensal);
+        
+        return $tpl->get();
+    }
+    
+    public function showFormCancel() {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/reserva");
+        $tpl->loadTemplateFile('formCancel.tpl.html');
+        
+        $tpl->setVariable('ID', $this->id);
+        $tpl->setVariable('Cliente', Cliente::showCliente($this->cliente_id));
+        $tpl->setVariable('Quadra', Quadra::showQuadra($this->quadra_id));
+        $tpl->setVariable('Horario', Horario::showHorario($this->horario_id));
+        $data = new DateTime($this->data);
+        $mensal = ($this->mensal == 'S') ? 'Mensalista ('.diaSemana($data->format('w')).')' : date2show($this->data);
+        $tpl->setVariable('Data', $mensal);
+        $tpl->setVariable('DataFim', date('d/m/Y'));
+        
+        return $tpl->get();
+    }
+    
+    public function delete() {
+        $this->status = 0;
+        return $this->update();
+    }
 }

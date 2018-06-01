@@ -48,6 +48,12 @@ class Cliente extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
+    public static function showCliente($id) {
+        $cliente = new Cliente();
+        $cliente->get($id);
+        return utf8_encode($cliente->nome);
+    }
+    
     public function showAll() {
         $tpl = new HTML_Template_Sigma(VIEW_DIR . "/cliente");
         $tpl->loadTemplateFile('lista.tpl.html');
@@ -90,6 +96,23 @@ class Cliente extends DB_DataObject
         
         $tpl->setVariable('ID', $this->id);
         $tpl->setVariable('Nome', utf8_encode($this->nome));
+        
+        return $tpl->get();
+    }
+    
+    public static function showSelect($id = null) {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/cliente");
+        $tpl->loadTemplateFile('select.tpl.html');
+        
+        $cliente = new Cliente();
+        $cliente->status = 1;
+        $cliente->find();
+        while ($cliente->fetch()) {
+            $tpl->setVariable('Nome', $cliente->showCliente($cliente->id));
+            $tpl->setVariable('ID', $cliente->id);
+            $tpl->setVariable('Selected', ($cliente->id == $id) ? ' selected="selected"' : '');
+            $tpl->parse('table_row');
+        }
         
         return $tpl->get();
     }
