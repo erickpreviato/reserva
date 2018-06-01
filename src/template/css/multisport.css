@@ -1,0 +1,107 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 1, 2018, 10:28:19 AM
+    Author     : erick
+*/
+
+.navbar-brand {
+    //position: absolute;
+    top: 0px;
+    //background: rgba(255,255,255,0.5);
+}
+
+.bg-dark-transparent {
+    background: rgba(255,255,255,0.8);
+}
+
+.carousel-caption {
+    left: 0px;
+    right: 0px;
+    color: #555;
+}
+
+.carousel-caption h5 { 
+    margin: 0px;
+    padding-top: 10px;
+    padding-bottom: 3px;
+    background: rgba(255,255,255,0.8);
+}
+.carousel-caption p {
+    margin: 0px;
+    padding-top: 3px;
+    padding-bottom: 10px;
+    background: rgba(255,255,255,0.8);
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+footer {
+    margin-top: 30px;
+    padding: 20px 0px;
+    background-color: #ccc;
+    //border-top: 1px solid red;
+    color: #333;
+}
+
+.text-green {
+    color: green;
+}
+
+.text-red {
+    color: red;
+}
+
+h1 {
+    text-align: center;
+}
+
+.title-border-bottom {
+    width: 100px;
+    height: 3px;
+    background-color: #f64747;
+    margin-bottom: 50px;
+}
+
+.com-fundo {
+    padding: 30px;
+    background: #ccc;
+}
+
+.space {
+    padding: 10px;
+}
+
+.nav-item {
+    margin-left: 25px;
+    padding-bottom: -10px;
+    border-bottom: 1px solid rgba(0,0,0,0);
+}
+.nav-item a:hover {
+    border-bottom: 1px solid red;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+a {
+    color: red;
+}
+
+a:hover {
+    color: #f64747;
+    text-decoration: none;
+}
+
+h6.card-title {
+    border-bottom: 1px solid #f64747;
+}
+.card-text {
+    font-size: 13px;
+}
