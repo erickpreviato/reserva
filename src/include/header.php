@@ -38,10 +38,11 @@
         <title>Multi Sport Escola de Futebol e Locação de Campos</title>
 
         <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="<?php echo CSS_URL ?>/bootstrap.min.css">
-        <link rel="stylesheet" href="<?php echo CSS_URL ?>/font-awesome.min.css">
-        <link rel="stylesheet" href="<?php echo CSS_URL ?>/ionicons.min.css">
-
+        <link rel="stylesheet" href="<?php echo CSS_URL ?>/bootstrap.min.css" />
+        <link rel="stylesheet" href="<?php echo CSS_URL ?>/font-awesome.min.css" />
+        <link rel="stylesheet" href="<?php echo CSS_URL ?>/ionicons.min.css" />
+        <link rel="stylesheet" href="<?php echo CSS_URL ?>/bootstrap-datepicker3.min.css" />
+        <link rel="stylesheet" href="<?php echo CSS_URL ?>/fullcalendar.min.css" />
 
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <link href="<?php echo CSS_URL ?>/ie10-viewport-bug-workaround.css" rel="stylesheet">

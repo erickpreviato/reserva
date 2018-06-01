@@ -27,59 +27,70 @@
 -->
 <script>
     $(document).ready(function () {
-        $('.btn-tipo-novo').on('click', function(){
-            $('.novo-tipo').removeClass('hide');
-            $('#tipo-descricao').focus();
+        $('.btn-cliente-novo').on('click', function(){
+            $('.novo-cliente').removeClass('hide');
+            $('#cliente-nome').focus();
         });
-        $('.btn-tipo-cancelar').on('click', function(){
-            $('.novo-tipo').addClass('hide');
+        $('.btn-cliente-cancelar').on('click', function(){
+            $('.novo-cliente').addClass('hide');
         });
-        $('.btn-tipo-salvar').on('click', function(){
-            $.post("{PHP_SELF}", {salvarTipo: true, descricao: $('#tipo-descricao').val()}).done(function(data) {
-                $("#tipo_id").append(data);
-                $('.novo-tipo').addClass('hide');
+        $('.btn-cliente-salvar').on('click', function(){
+            $.post("{PHP_SELF}", {salvarCliente: true, nome: $('#cliente-nome').val(), telefone: $('#cliente-telefone').val()}).done(function(data) {
+                $("#cliente_id").append(data);
+                $('.novo-cliente').addClass('hide');
             });
+        });
+        $('#data').mask('99/99/9999');
+        $('#data').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy',                
+            language: 'pt-BR'
         });
     });
 </script>
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-    <h4 class="modal-title" id="addModalLabel">Cadastro de horário</h4>
+    <h4 class="modal-title" id="addModalLabel">Nova reserva de quadra</h4>
 </div>
 <div class="modal-body">
     <input type="hidden" name="id" value="{ID}" />
     <div class="form-group">
-        <label>Tipo</label>
+        <label>Cliente</label>
         <div class="input-group">
-            {Tipo}
+            {Clientes}
             <span class="input-group-btn">
-                <button type="button" class="btn btn-primary btn-flat btn-tipo-novo">Novo</button>
+                <button type="button" class="btn btn-primary btn-flat btn-cliente-novo">Novo</button>
             </span>
         </div>
-        <div class="novo-tipo hide">
+        <div class="novo-cliente hide">
             <div class="form-group">
-                <label>Descrição do tipo de horário (Ex: De segunda à sexta)</label>
-                <input type="text" class="form-control" id="tipo-descricao" name="tipo-descricao" />
+                <label>Nome do cliente</label>
+                <input type="text" class="form-control" id="cliente-nome" name="cliente-nome" />
             </div>
-            <button type="button" class="btn btn-default btn-tipo-cancelar">Cancelar</button>
-            <button type="button" class="btn btn-primary btn-flat pull-right btn-tipo-salvar">Salvar tipo</button>
+            <div class="form-group">
+                <label>Telefone de contato</label>
+                <input type="text" class="form-control" id="cliente-telefone" name="cliente-telefone" />
+            </div>
+            <button type="button" class="btn btn-default btn-cliente-cancelar">Cancelar</button>
+            <button type="button" class="btn btn-primary btn-flat pull-right btn-cliente-salvar">Salvar cliente</button>
         </div>
+    </div>
+    <div class="form-group">
+        <label>Quadra</label>
+        {Quadras}
+    </div>
+    <div class="form-group">
+        <label for="data">Data</label>
+        <input type="text" data-inputmask="'alias': 'dd/mm/yyyy'" class="form-control" id="data" name="data" value="{Data}" placeholder="Digite a data da reserva" data-mask />
     </div>
     <div class="form-group">
         <label>Horário</label>
-        <div class="input-group">
-            <input type="number" class="form-control" id="hora" name="hora" value="{Hora}" required="required" />
-            <span class="input-group-addon">H</span>
-            <input type="number" class="form-control" id="minuto" name="minuto" value="{Minuto}" required="required" />
-            <span class="input-group-addon">min</span>
-        </div>
+        {Horarios}
     </div>
-    <div class="form-group">
-        <label for="duracao">Duração</label>
-        <div class="input-group">
-            <input type="number" class="form-control" id="duracao" name="duracao" value="{Duracao}" required="required" />
-            <span class="input-group-addon">min</span>
-        </div>
+    <div class="checkbox">
+        <label>
+            <input name="mensal"{Mensal} type="checkbox"> Mensalista
+        </label>
     </div>
 </div>
 <div class="modal-footer">

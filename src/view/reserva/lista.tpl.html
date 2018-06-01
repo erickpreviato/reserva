@@ -1,0 +1,192 @@
+<!--
+/**
+ * 
+ * Copyright © 2017 Erick Vansim Previato <erick.previato@gmail.com>
+ * 
+ * Este arquivo é parte do programa "Reserva de Quadra"
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * 
+ */
+-->
+<script>
+    $(document).ready(function () {
+        $(".btn-new").on('click', function(){
+            $("#addModal .modal-body").html('<center><img src="{IMAGE_URL}/carregando.gif" /></center>');
+            $("#addModal .modal-title").html("Reserva de quadra");
+            $("#addModal").modal("show");
+            $.post("{PHP_SELF}", {showForm: $(this).val()}).done(function(data) {
+                $("#addModal").modal("hide");
+                $("#addModal .modal-content").html(data);
+                $("#addModal").modal("show");
+            });
+        });
+        $(".btn-del").on('click', function(){
+            $("#addModal .modal-body").html('<center><img src="{IMAGE_URL}/carregando.gif" /></center>');
+            $("#addModal .modal-title").html("Remover reserva");
+            $("#addModal").modal("show");
+            $.post("{PHP_SELF}", {showFormDel: $(this).val()}).done(function(data) {
+                $("#addModal").modal("hide");
+                $("#addModal .modal-content").html(data);
+                $("#addModal").modal("show");
+            });
+        });
+        $(".btn-cancel").on('click', function(){
+            $("#addModal .modal-body").html('<center><img src="{IMAGE_URL}/carregando.gif" /></center>');
+            $("#addModal .modal-title").html("Cancelar inscrição mensal");
+            $("#addModal").modal("show");
+            $.post("{PHP_SELF}", {showFormCancel: $(this).val()}).done(function(data) {
+                $("#addModal").modal("hide");
+                $("#addModal .modal-content").html(data);
+                $("#addModal").modal("show");
+            });
+        });
+        
+        $(".btn-xs").tooltip();
+        
+        $('#calendar').fullCalendar({
+            defaultView: 'agendaWeek',
+            firstDay   : 1,
+            header    : {
+              left  : 'prev,next today',
+              center: 'title',
+              right : 'agendaWeek,agendaDay'
+            },
+            buttonText: {
+              today: 'Hoje',
+              week : 'Semana',
+              day  : 'Dia'
+            },
+            //Eventos
+            events: [
+              <!-- BEGIN events -->
+              {Eventos}
+              <!-- END events -->
+            ],
+            editable  : false,
+            rendering : 'inverse-background',
+            droppable : false, // this allows things to be dropped onto the calendar !!!
+            <!-- BEGIN mensal -->
+            eventRender: function(event){
+                return (event.ranges.filter(function(range){ // test event against all the ranges
+
+                    return (event.start.isBefore(range.end) &&
+                            event.end.isAfter(range.start));
+
+                }).length)>0; //if it isn't in one of the ranges, don't render it (by returning false)
+            },
+            <!-- END mensal -->
+            drop      : function (date, allDay) { // this function is called when something is dropped
+
+                // retrieve the dropped element's stored Event Object
+                var originalEventObject = $(this).data('eventObject');
+
+                // we need to copy it, so that multiple events don't have a reference to the same object
+                var copiedEventObject = $.extend({}, originalEventObject);
+
+                // assign it the date that was reported
+                copiedEventObject.start           = date;
+                copiedEventObject.allDay          = allDay;
+                copiedEventObject.backgroundColor = $(this).css('background-color');
+                copiedEventObject.borderColor     = $(this).css('border-color');
+
+                // render the event on the calendar
+                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+                // is the "remove after drop" checkbox checked?
+                if ($('#drop-remove').is(':checked')) {
+                    // if so, remove the element from the "Draggable Events" list
+                    $(this).remove();
+                }
+
+            }
+        });
+    });
+</script>
+<section class="content-header">
+    <h1>
+        Reserva de quadras
+        <small>Sistema de reservas</small>
+    </h1>
+    <ol class="breadcrumb">
+        <i class="fa fa-dashboard"></i> &nbsp; 
+        <li><a href="{HOME}">Home</a></li>
+        <li class="active">Reserva de quadras</li>
+    </ol>
+</section>
+<button class="btn btn-primary pull-right btn-new" value="0">
+    <i class="fa fa-plus"></i> Cadastrar nova reserva
+</button>
+<br /><br />
+<ul class="nav nav-tabs nav-justified">
+    <li class="active"><a data-toggle="tab" href="#home">Listagem completa</a></li>
+    <li><a data-toggle="tab" href="#menu1">Unidade 1</a></li>
+    <li><a data-toggle="tab" href="#menu2">Unidade 2</a></li>
+    <li><a data-toggle="tab" href="#menu2">Unidade 3</a></li>
+</ul>
+<div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th class="text-center">Data</th>
+                    <th class="text-center">Quadra</th>
+                    <th class="text-center">Horário</th>
+                    <th class="text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- BEGIN table_row -->
+                <tr>
+                    <td>{Cliente}</td>
+                    <td class="text-center">{Data}</td>
+                    <td class="text-center">{Quadra}</td>
+                    <td class="text-center">{Horario}</td>
+                    <td class="text-center">
+                        <button data-toggle="tooltip" data-original-title="Editar / Ver mais detalhes" class="btn btn-xs btn-new" value="{ID}"><i class="fa fa-pencil"></i></button>
+                        <!-- BEGIN cancelar -->
+                        <button data-toggle="tooltip" data-original-title="Cancelar inscrição mensal" class="btn btn-xs btn-primary btn-cancel" value="{ID}"><i class="fa fa-remove"></i></button>
+                        <!-- END cancelar -->
+                        <button data-toggle="tooltip" data-original-title="Remover" class="btn btn-xs btn-danger btn-del" value="{ID}"><i class="fa fa-trash"></i></button>
+                    </td>
+                </tr>
+                <!-- END table_row -->
+                <!-- BEGIN table_none -->
+                <tr>
+                    <td colspan="5">Nenhuma reserva encontrada</td>
+                </tr>
+                <!-- END table_none -->
+            </tbody>
+        </table>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+        <div class="box box-primary">
+            <br />
+            <div id="calendar"> </div>
+        </div>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+        <div id="calendar2"></div>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+        <div id="calendar3"></div>
+    </div>
+</div>

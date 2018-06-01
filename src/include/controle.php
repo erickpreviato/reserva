@@ -48,13 +48,25 @@ function show_message() {
 }
 
 function date2save($date) {
-    $data = new DateTime($date);
+    $data = DateTime::createFromFormat('d/m/Y', $date);
     return $data->format("Y-m-d H:i:s");
 }
 
 function date2show($date) {
     $data = new DateTime($date);
-    return $data->format("d-m-Y");
+    return $data->format("d/m/Y");
+}
+
+function diaSemana($dia) {
+    switch ($dia) {
+        case 0 : return 'Domingo';
+        case 1 : return 'Segunda';
+        case 2 : return 'Terça';
+        case 3 : return 'Quarta';
+        case 4 : return 'Quinta';
+        case 5 : return 'Sexta';
+        case 6 : return 'Sábado';
+    }
 }
 
 function verificaLoginAtivo() {

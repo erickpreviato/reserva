@@ -47,6 +47,14 @@ class Horario extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
+    public static function showHorario($id) {
+        $horario = new Horario();
+        $horario->get($id);
+        $hora = $horario->inicio_hora.':'.$horario->inicio_minuto;
+        $horaFim = date("H:i", strtotime($hora.' + '.$horario->duracao.' minutes'));
+        return Tipo::showTipo($horario->tipo_id).' (das '.$hora.' às '.$horaFim.')';
+    }
+    
     public function showAll() {
         $tpl = new HTML_Template_Sigma(VIEW_DIR . "/horario");
         $tpl->loadTemplateFile('lista.tpl.html');
@@ -93,6 +101,22 @@ class Horario extends DB_DataObject
         $hora = $this->inicio_hora.':'.$this->inicio_minuto;
         $horaFim = date("H:i", strtotime($hora.' + '.$this->duracao.' minutes'));
         $tpl->setVariable('Horario', Tipo::showTipo($this->tipo_id).' (das '.$hora.' às '.$horaFim.')');
+        
+        return $tpl->get();
+    }
+    
+    public static function showSelect($id = null) {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/horario");
+        $tpl->loadTemplateFile('select.tpl.html');
+        
+        $horario = new Horario();
+        $horario->find();
+        while ($horario->fetch()) {
+            $tpl->setVariable('Nome', $horario->showHorario($horario->id));
+            $tpl->setVariable('ID', $horario->id);
+            $tpl->setVariable('Selected', ($horario->id == $id) ? ' selected="selected"' : '');
+            $tpl->parse('table_row');
+        }
         
         return $tpl->get();
     }

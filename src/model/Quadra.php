@@ -46,6 +46,12 @@ class Quadra extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
+    public static function showQuadra($id) {
+        $quadra = new Quadra();
+        $quadra->get($id);
+        return Unidade::showUnidade($quadra->unidade_id).' - '.utf8_encode($quadra->nome);
+    }
+    
     public function showAll() {
         $tpl = new HTML_Template_Sigma(VIEW_DIR . "/quadra");
         $tpl->loadTemplateFile('lista.tpl.html');
@@ -85,6 +91,22 @@ class Quadra extends DB_DataObject
         
         $tpl->setVariable('ID', $this->id);
         $tpl->setVariable('Nome', utf8_encode($this->nome).' - '.Unidade::showUnidade($this->unidade_id));
+        
+        return $tpl->get();
+    }
+    
+    public static function showSelect($id = null) {
+        $tpl = new HTML_Template_Sigma(VIEW_DIR . "/quadra");
+        $tpl->loadTemplateFile('select.tpl.html');
+        
+        $quadra = new Quadra();
+        $quadra->find();
+        while ($quadra->fetch()) {
+            $tpl->setVariable('Nome', $quadra->showQuadra($quadra->id));
+            $tpl->setVariable('ID', $quadra->id);
+            $tpl->setVariable('Selected', ($quadra->id == $id) ? ' selected="selected"' : '');
+            $tpl->parse('table_row');
+        }
         
         return $tpl->get();
     }

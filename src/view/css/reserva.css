@@ -18,7 +18,7 @@
     font-size: 16px;
     background-color: #333;
 }
-.barra-menu a:hover {
+.barra-menu a:hover, .barra-menu a:focus {
     color: #eee;
     text-decoration: none;
     background-color: #333 !important;
@@ -39,7 +39,7 @@
     font-size: 16px;
     background-color: #da251d;
 }
-.barra-menu2 a:hover {
+.barra-menu2 a:hover, .barra-menu2 a:focus {
     color: #eee;
     text-decoration: none;
     background-color: #da251d !important;
@@ -201,7 +201,7 @@ footer a:hover {
     }
 }
 
-.novo-tipo {
+.novo-tipo, .novo-cliente {
     position: absolute;
     width: 100%;
     height: 310px;
@@ -210,4 +210,7 @@ footer a:hover {
     padding: 15px;
     z-index: 1000;
     background-color: #fff;
+}
+.novo-cliente {
+    height: 410px;
 }

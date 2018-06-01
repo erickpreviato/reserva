@@ -27,6 +27,12 @@
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="<?php echo JS_URL?>/bootstrap.min.js"></script>
+                <script src="<?php echo JS_URL?>/bootstrap-datepicker.min.js"></script>
+                <script src="<?php echo JS_URL?>/bootstrap-datepicker.pt-BR.min.js"></script>
+                <script src="<?php echo JS_URL?>/jquery.maskedinput.js"></script>
+                <script src="<?php echo JS_URL?>/moment.js"></script>
+                <script src="<?php echo JS_URL?>/fullcalendar.min.js"></script>
+                <script src="<?php echo JS_URL?>/fullcalendar.pt-br.js"></script>
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 		<script src="<?php echo JS_URL?>/ie10-viewport-bug-workaround.js"></script>
 	</body>
